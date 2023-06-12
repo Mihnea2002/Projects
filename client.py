@@ -1,3 +1,5 @@
+//this code must be in the same file as server.py since they are bound to each other
+
 import socket
 import sys
 
