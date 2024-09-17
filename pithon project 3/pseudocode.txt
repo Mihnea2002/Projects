@@ -1,0 +1,35 @@
+# Instantiate DownloadThread instances
+download_threads = []
+for url, output_file in zip(urls, output_files):
+    download_thread = DownloadThread(url, output_file)
+    download_threads.append(download_thread)
+
+# Start and join DownloadThread instances
+for download_thread in download_threads:
+    download_thread.start()
+for download_thread in download_threads:
+    download_thread.join()
+
+# Instantiate DecryptThread instances
+decrypt_threads = []
+for output_file in output_files:
+    decrypt_thread = DecryptThread(output_file, decrypted_data)
+    decrypt_threads.append(decrypt_thread)
+
+# Start and join DecryptThread instances
+for decrypt_thread in decrypt_threads:
+    decrypt_thread.start()
+for decrypt_thread in decrypt_threads:
+    decrypt_thread.join()
+
+# Instantiate Combiner
+combiner = Combiner(decrypted_data, output_file_combined)
+
+# Start and join Combiner
+combiner.start()
+combiner.join()
+
+# Display the content of s_final.txt file
+with open(output_file_combined, 'r') as final_file:
+    content = final_file.read()
+    print(f"Content of s_final.txt:\n{content}")
